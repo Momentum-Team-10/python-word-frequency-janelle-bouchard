@@ -55,25 +55,31 @@ import re
 
 def print_word_freq(file):
     """Read in `file` and print out the frequency of words in that file."""
-    with open(file) as text:
+    with open(file) as file:
         # Return all lines in the file, as a list where each line is an item in the list object
         # lines = text.readlines()
         """Return all lines in `file` as a list where the entire text string is a list object."""
-        lines = text.read()
+        lines = file.read()
         print(f"{len(lines)} lines in the file.")
+        lines = lines.split()
         # print(lines)
 
         #Using a regex sub-string function, find all of the punctuation in our variable (line) and replace it with nothing
             # re.sub(pattern, replacement, original_string)
             # because of the use of backslashes in regex, add an "r" before the pattern and wrap the pattern in quotes to convey that the code should look at the raw string
             # the regex combo to find all punctuation includes: "^" to mean "not" + 
-            # "\w" to match alphanumeric characters (ie class: [a-zA-Z0-9_]) and "\s" to match any whitespace character (ie class: [ \t\n\r\f\v])
+            # "\w" to match alphanumeric characters (ie class: [a-zA-Z0-9_]) and "\s" to match any whitespace character (ie class: [ \t\r\f\v])
             # r'[^\w\s] = for any character in the raw string that is NOT alphanumeric or a whitespace character
             # add the .lower method to the end of the sub-string function to convert all text to lowercase
         for line in lines:
             line = re.sub(r'[^\w\s]','',line).lower()
+            line = line.replace('\n', '')
             print(line)
-
+            # for words in line:
+        # words = lines.split(" ")
+        # print(words)
+            # words.join()?
+            #how do I combine all of the words?
 # Alt method for removing punctuation:
     # for line in lines:
     #     line = line.replace(",", "")
