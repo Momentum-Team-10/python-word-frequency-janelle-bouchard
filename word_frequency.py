@@ -61,7 +61,7 @@ def print_word_freq(file):
         """Return all lines in `file` as a list where the entire text string is a list object."""
         lines = file.read()
         print(f"{len(lines)} lines in the file.")
-        lines = lines.split()
+        words = lines.split()
         # print(lines)
 
         #Using a regex sub-string function, find all of the punctuation in our variable (line) and replace it with nothing
@@ -71,10 +71,16 @@ def print_word_freq(file):
             # "\w" to match alphanumeric characters (ie class: [a-zA-Z0-9_]) and "\s" to match any whitespace character (ie class: [ \t\r\f\v])
             # r'[^\w\s] = for any character in the raw string that is NOT alphanumeric or a whitespace character
             # add the .lower method to the end of the sub-string function to convert all text to lowercase
-        for line in lines:
-            line = re.sub(r'[^\w\s]','',line).lower()
-            line = line.replace('\n', '')
-            print(line)
+        for word in words:
+            word = re.sub(r'[^\w\s]','',word).lower()
+            word = word.replace('\n', '')
+        print(words)
+
+
+            # word_list = list(line)
+            # print (word_list)
+        # word_list = list(lines) not in STOP_WORDS
+        # print(word_list)
             # for words in line:
         # words = lines.split(" ")
         # print(words)
