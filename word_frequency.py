@@ -59,9 +59,9 @@ def print_word_freq(file):
         # Return all lines in the file, as a list where each line is an item in the list object
         # lines = text.readlines()
         """Return all lines in `file` as a list where the entire text string is a list object."""
-        lines = file.read()
+        lines = file.read().splitlines()
         print(f"{len(lines)} lines in the file.")
-        words = lines.split()
+        # words = lines.split()
         # print(lines)
 
         #Using a regex sub-string function, find all of the punctuation in our variable (line) and replace it with nothing
@@ -71,10 +71,45 @@ def print_word_freq(file):
             # "\w" to match alphanumeric characters (ie class: [a-zA-Z0-9_]) and "\s" to match any whitespace character (ie class: [ \t\r\f\v])
             # r'[^\w\s] = for any character in the raw string that is NOT alphanumeric or a whitespace character
             # add the .lower method to the end of the sub-string function to convert all text to lowercase
-        for word in words:
-            word = re.sub(r'[^\w\s]','',word).lower()
-            word = word.replace('\n', '')
-        print(words)
+        def format_line(line):
+            line = re.sub(r'[^\w\s]','',line).lower()
+            # line = line.replace('\n', '')
+            return line.strip()
+        # this is called a list comprehension
+        formatted_lines = [format_line(line)for line in lines]
+        text = " ".join(formatted_lines).split()
+        # print(text)
+
+        def count_words(word_list):
+            # this uses an accumulator pattern. define result and and return it (bread). the loop is the meat that does the accumulating
+            result = {}
+
+            for word in word_list:
+                # use readable variables!
+                word_exists = word in result
+
+                # word exsits
+                if word_exists:
+                    result[word] += 1
+                else:
+                    should_add_word = word not in STOP_WORDS
+                    if should_add_word:
+                        # initialize the count
+                        result[word] = 1
+
+            return result
+
+        word_tally = count_words(text)
+
+        sorted_list = sorted(word_tally.items(), key=lambda x:x[1], reverse=True)
+        for (word, count) in sorted_list:
+            print(f"{word} | {count} {count * '*'}")
+        
+
+        # for line in lines:
+        #     line = re.sub(r'[^\w\s]','',line).lower()
+        #     line = line.replace('\n', '')
+        # print(lines)
 
 
             # word_list = list(line)
